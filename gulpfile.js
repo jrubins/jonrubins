@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var connect = require('gulp-connect');
+var history = require('connect-history-api-fallback');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var source = require('vinyl-source-stream');
@@ -36,7 +37,14 @@ gulp.task('connect', function() {
         root: ['dist'],
         port: config.port,
         base: config.devBaseUrl,
-        livereload: true
+        livereload: true,
+        middleware: function() {
+            return [
+                // This middleware allows us to use browser history. This basically serves the
+                // index.html file for all requests.
+                history()
+            ];
+        }
     });
 });
 
