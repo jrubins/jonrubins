@@ -4,7 +4,7 @@ This is a boilerplate project for ReactJS applications.
 
 ## Core Dependencies
 * React (v0.14.3)
-* React Router (v1.0.0)
+* React Router (v2.0.0)
 * Flux
  
 ## Build Dependencies
