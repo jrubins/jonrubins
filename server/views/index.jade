@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+        meta(
+            name='viewport'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        )
+
+        title= 'App'
+
+        link(
+            href='/css/app.css'
+            rel='stylesheet'
+            type='text/css'
+        )
+
+    body
+        #app!= html
+
+        script(type='text/javascript').
+            window.__INITIAL_STATE__ = !{JSON.stringify(state)};
+
+        script(
+            src='/scripts/bundle.js'
+        )
