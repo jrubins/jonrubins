@@ -4,18 +4,26 @@
 require('babel-register');
 
 var express = require('express');
+var ConnectLiveReload = require('connect-livereload');
 
 var config = require('./../config/buildConfig');
+var Constants = require('./../app/constants/constants');
+var RouteHandlers = require('./routeHandlers');
 
 var app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
+app.use(ConnectLiveReload({
+    port: config.serverLrPort
+}));
+
 app.use(express.static(config.paths.dist));
 
-require('./routeHandlers')(app);
+RouteHandlers(app);
 
 app.listen(config.serverPort, function() {
     console.log('Server listening on port ' + config.serverPort + '...');
+    console.log(Constants.SERVER_START_KEYWORD);
 });

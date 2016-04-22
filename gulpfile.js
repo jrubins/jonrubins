@@ -14,6 +14,7 @@ var sass = require('gulp-sass');
 var rimraf = require('rimraf'); // Used to empty cache directory (rm -rf)
 
 var config = require('./config/buildConfig'); // Configuration options.
+var Constants = require('./app/constants/constants');
 
 // Browserify is defined here so it remains persistent through incremental builds. Needed for watchify.
 var browserifier = browserify({
@@ -30,13 +31,27 @@ browserifier.plugin(watchify, {
 // This is the local dev server. Uses gulp-live-server.
 var server;
 
+/**
+ * Binds listeners for a server reload so that we can notify live reload to
+ * refresh the page when the server has finished reloading.
+ */
+function bindServerReload() {
+    server.server.stdout.on('data', function(data) {
+        if (data.indexOf(Constants.SERVER_START_KEYWORD) !== -1) {
+            server.notify({
+                path: 'bundle.js'
+            });
+        }
+    });
+}
+
 gulp.task('init-server', function() {
     server = gls(config.paths.server.mainJs);
-    server.start();
+    server.start().then(bindServerReload);
 });
 
-gulp.task('restart-server', function() {
-    server.start();
+gulp.task('restart-server', ['js'], function() {
+    server.start().then(bindServerReload);
 });
 
 gulp.task('html', function() {
@@ -126,8 +141,7 @@ gulp.task('js', function(cb) {
             }));
         })
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest(config.paths.dist + '/scripts'))
-        .pipe(server.notify());
+        .pipe(gulp.dest(config.paths.dist + '/scripts'));
 });
 
 gulp.task('watch', function() {
@@ -151,7 +165,7 @@ gulp.task('watch', function() {
     gulp.watch(config.paths.app.sass.src, ['sass']);
     registerJsWatch();
     browserifier.on('update', function() {
-        gulp.start('js');
+        gulp.start('js', 'restart-server');
 
         registerJsWatch();
     });
