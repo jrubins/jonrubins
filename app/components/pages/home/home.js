@@ -16,7 +16,7 @@ var HomePage = React.createClass({
                             <Input
                                 className='general-search'
                                 type='text'
-                                placeholder='...' />
+                                placeholder='under construction...' />
                         </div>
                     </div>
                 </div>
