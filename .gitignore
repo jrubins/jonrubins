@@ -1,3 +1,23 @@
-.cache
+# Caches.
+.babel-cache
+.eslintcache
+.jest-cache
+.tmp
+
+# Database
+db
+
+# Dependencies.
 node_modules
+
+# Builds.
 dist
+
+# Logs
+yarn-error.log
+npm-debug.log
+
+# Computer specific files.
+.DS_Store
+.env
+.idea

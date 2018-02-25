@@ -1,1 +1,13 @@
-@import 'common';
+.home-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, $persian-blue 0%, $fountain-blue 100%);
+
+  h1 {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px 0 0;
+    color: $light-white;
+
+    text-align: center;
+  }
+}
