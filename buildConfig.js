@@ -9,7 +9,7 @@ module.exports = {
 
     dist: path.resolve(__dirname, 'dist'),
 
-    app: {
+    src: {
       base: path.resolve(__dirname, 'app'),
       favicon: path.resolve(__dirname, 'app/assets/images/favicon.ico'),
       mainJs: path.resolve(__dirname, 'app/main.jsx'),
